@@ -1,0 +1,72 @@
+.App {
+  text-align: center;
+  padding-left: 150px;
+  padding-right: 150px;
+  background-color: #404040;
+}
+
+span {
+  position: relative;
+  font-family: "Avenir Next", sans-serif;
+  font-weight: 900;
+  font-size: 64px;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  color: #404040;
+}
+
+/* We create a pseudo element and blur it using the SVG filter. We’ll grab the content from the custom HTML attribute. */
+
+span:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: attr(filter-content);
+
+  filter: url(#motion-blur-filter);
+}
+
+/* We hide the SVG filter element from the DOM as it would take up some space */
+
+svg {
+  display: none;
+}
+
+.paper-bg {
+  height: 100%;
+}
+
+.img-card {
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.video {
+  width: 745px;
+  margin: 20px;
+}
+
+.flex-container {
+  display: flex;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+.flex-item {
+  align-content: center;
+  margin: 20px;
+  width: 50%;
+}
+
+
+
+  @media screen and (min-width: 600px) {
+    .video {
+        max-width: 80%;
+    }
+} 
