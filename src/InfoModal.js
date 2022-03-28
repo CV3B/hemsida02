@@ -19,6 +19,7 @@ const style = {
 };
 
 /* Modal för att visa mer information */
+/*TODO Förbättra modal genom att man kan anpassa den med egna element, t.ex lägga till bilder eller ha olika h1, h2... */
 export default function InfoModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);

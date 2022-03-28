@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 /* MUI imports */
 import Typography from '@mui/material/Typography';
@@ -14,7 +14,6 @@ import Divider from '@mui/material/Divider';
 /* MUI icons imports */
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import InfoIcon from '@mui/icons-material/Info';
 import IconButton from '@mui/material/IconButton';
 
 /* MUI style imports */
@@ -34,6 +33,12 @@ import f12022_template_car_sideview from './images/f12022_template_car_sideview.
 import nosy_Be_Taxi_Madagascar from './images/Nosy_Be_Taxi_Madagascar.mov';
 
 import InfoModal from './InfoModal';
+import InfiniteScroller from './infiniteScroller';
+
+import CookieConsent from "react-cookie-consent";
+
+import { useCookies } from 'react-cookie';
+
 
 import './App.css';
 
@@ -47,9 +52,9 @@ const theme = createTheme({
      
     },
     secondary: {
-      main: "#f44336",
-      light: "#ff7961",
-      dark: "#ba000d"
+      main: "#404040",
+      light: "#404040",
+      dark: "#404040"
     },
     white: {
       main: "#ffffff"
@@ -63,7 +68,7 @@ const theme = createTheme({
 /* Klass för att få vit text */
 const useStyles = makeStyles((theme) => ({
   whiteTextColor: {
-    color: "white",
+    // color: "white",
     fontWeight: "bold",
   },
 }));
@@ -71,27 +76,53 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const [currentImg, setCurrentImg] = useState(f12022_ferrari);
+  const [cookies, setCookie, removeCookie] = useCookies(['clicks']);
+  const [enbaleCookies, setEnableCookies] = useState(false);
 
   const classes = useStyles();
 
   const imgArr = [f12022_ferrari, f12022_mclaren, f12022_am_ha_mc, f12022_template_car];
 
   const handleLeft = () => {
+    handleClicks(parseInt(cookies.clicks) + 1)
+
     /* Sätter aktiv bild som den sista i arrayen(imgArr) för anvädaren */
-    if(imgArr.indexOf(currentImg) === 0) { return setCurrentImg(imgArr[imgArr.length-1]) };
+    if(imgArr.indexOf(currentImg) === 0) { 
+      handleClicks(parseInt(cookies.clicks) + 1)
+      
+      return setCurrentImg(imgArr[imgArr.length-1]) 
+    };
 
     setCurrentImg(imgArr[imgArr.indexOf(currentImg)-1])
+
   }
 
   const handleRight = () => {
+    handleClicks(parseInt(cookies.clicks) + 1)
+
     /* Sätter aktiv bild som den första i arrayen(imgArr) för anvädaren */
-    if(imgArr.indexOf(currentImg) === imgArr.length-1) { return setCurrentImg(imgArr[0]) };
+    if(imgArr.indexOf(currentImg) === imgArr.length-1) { 
+      handleClicks(parseInt(cookies.clicks) + 1)
+      
+      return setCurrentImg(imgArr[0]) 
+    };
     
     setCurrentImg(imgArr[imgArr.indexOf(currentImg)+1])
   }
 
+  function handleClicks(newClicks) {
+    if(enbaleCookies) {
+      setCookie('clicks', (isNaN(newClicks) ? 1 : newClicks), { path: '/' });
+      console.log("Cookies", cookies.clicks)
+    }
+  }
+
+  function removeCookies(){
+    removeCookie("clicks", { path: "/" })
+  }
+
   return (
-    <div className="App">
+    <div className="App"> 
       <ThemeProvider theme={theme}>
         <Paper elevation={12} className="paper-bg" >
           {/* Title design tagen ifrån https://codepen.io/getflourish/pen/zYqRzmv */}
@@ -100,7 +131,9 @@ function App() {
              <feGaussianBlur stdDeviation="100 0"></feGaussianBlur>
            </filter>
           </svg>
-          <span filter-content="S">Formula 1 2022 car</span>
+          <div className="navbar">
+            <span filter-content="S">Formula 1 2022 car</span>
+          </div>
 
           <Divider variant="middle" color="#404040" />
 
@@ -111,7 +144,7 @@ function App() {
 
           <Divider variant="middle" color="#404040" />
 
-          <Card sx={{ maxWidth: 745, backgroundColor: "#404040" }} className="img-card">
+          <Card sx={{ maxWidth: 745 }} className="img-card">
             <CardMedia
               component="img"
               height="340"
@@ -128,7 +161,7 @@ function App() {
 
           {/* Här är F1 informationen */}
           <div className="flex-container">
-            <Card sx={{ maxWidth: 545, backgroundColor: "#404040" }} className="flex-item">
+            <Card sx={{ maxWidth: 545 }} className="flex-item">
               <CardMedia
                 component="img"
                 height="240"
@@ -150,7 +183,7 @@ function App() {
               </CardActions>
             </Card>
 
-            <Card sx={{ maxWidth: 545, backgroundColor: "#404040" }} className="flex-item">
+            <Card sx={{ maxWidth: 545 }} className="flex-item">
               <CardMedia
                 component="img"
                 height="240"
@@ -172,7 +205,7 @@ function App() {
               </CardActions>
             </Card>
 
-            <Card sx={{ maxWidth: 545, backgroundColor: "#404040" }} className="flex-item">
+            <Card sx={{ maxWidth: 545 }} className="flex-item">
               <CardMedia
                 component="img"
                 height="240"
@@ -193,7 +226,7 @@ function App() {
               </CardActions>
             </Card>
 
-            <Card sx={{ maxWidth: 545, backgroundColor: "#404040" }} className="flex-item">
+            <Card sx={{ maxWidth: 545 }} className="flex-item">
               <CardMedia
                 component="img"
                 height="240"
@@ -214,7 +247,7 @@ function App() {
               </CardActions>
             </Card>
 
-            <Card sx={{ maxWidth: 545, backgroundColor: "#404040" }} className="flex-item">
+            <Card sx={{ maxWidth: 545 }} className="flex-item">
               <CardMedia
                 component="img"
                 height="240"
@@ -236,7 +269,7 @@ function App() {
               </CardActions>
             </Card>
 
-            <Card sx={{ maxWidth: 545, backgroundColor: "#404040" }} className="flex-item">
+            <Card sx={{ maxWidth: 545 }} className="flex-item">
               <CardMedia
                 component="img"
                 height="240"
@@ -257,6 +290,31 @@ function App() {
               </CardActions>
             </Card>
           </div>
+          <CookieConsent
+            location="bottom"
+            buttonText="I accept"
+            enableDeclineButton
+            declineButtonText="I decline"
+            cookieName="cookie"
+            style={{ background: "#03a9f4" }}
+            buttonStyle={{ background: "#388e3c", color: "#ffffff" , fontSize: "13px" }}
+            // expires={0}
+            // debug={true}
+            onAccept={() => {
+              setEnableCookies(true);
+            }}
+            onDecline={() => {
+              setEnableCookies(false);
+            }}
+
+          >
+            <Typography variant="h6" style={{ fontSize: "18px" }}>This website uses cookies to enhance the user experience.(The website saves user activity)</Typography>
+        </CookieConsent>
+
+        <Divider variant="middle" color="#404040" sx={{marginBottom: "10px"}} />
+
+        <InfiniteScroller />
+
         </Paper>
       </ThemeProvider>
     </div>
